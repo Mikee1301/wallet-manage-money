@@ -4,11 +4,11 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import * as bcrypt from 'bcrypt';
-import { RolesGuard } from 'src/common/guards/roles.guard';
-import { Roles } from 'src/common/decorators/role.decorator';
-import { Role } from 'src/common/enums/role.enum';
-import { JwtGuard } from 'src/common/guards/jwt.guard';
-import { Public } from 'src/common/decorators/public.decorator';
+import { RolesGuard } from '../../common/guards/roles.guard';
+import { Roles } from '../../common/decorators/role.decorator';
+import { Role } from '../../common/enums/role.enum';
+import { JwtGuard } from '../../common/guards/jwt.guard';
+import { Public } from '../../common/decorators/public.decorator';
 
 @Controller('users')
 @UseGuards(JwtGuard, RolesGuard)
