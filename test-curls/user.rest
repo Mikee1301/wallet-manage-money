@@ -1,0 +1,39 @@
+# curl -X POST http://localhost:3000/users \
+# -H "Content-Type: application/json" \
+# -d '{"name": "John Doe", "email": "jhon.doe@gmail.com", "password": "P@ssword1"}'
+
+
+# GET http://localhost:3000/users
+
+# GET http://localhost:3000/users/5
+
+
+# curl -X PUT http://localhost:3000/users/1 \
+# -H "Content-Type: application/json" \
+# -d '{"password": "P@ssword123"}'
+
+# Delete http://localhost:3000/users/6
+
+# curl -X POST http://localhost:3000/users/forgot-password \
+#      -H "Content-Type: application/json" \
+#      -d '{"email": "jhon.doe@gmail.com"}'
+
+# curl -X POST http://localhost:3000/users/verify-otp \
+#      -H "Content-Type: application/json" \
+#      -d '{"email": "jhon.doe@gmail.com", "otp": "123456"}'
+
+# curl -X POST http://localhost:3000/users/reset-password \
+#      -H "Content-Type: application/json" \
+#      -d '{"email": "jhon.doe@gmail.com", "otp": "123456", "newPassword": "P@ssword1"}'
+
+
+# curl -X POST http://localhost:3000/auth/register \
+# -H "Content-Type: application/json" \
+# -d '{"name": "Mike Doe", "email": "mike.doe@gmail.com", "password": "P@ssword1"}'
+
+curl -X POST http://localhost:3000/auth/login \
+-H "Content-Type: application/json" \
+-d '{"email": "mike.doe@gmail.com", "password": "P@ssword1"}'
+
+
+
