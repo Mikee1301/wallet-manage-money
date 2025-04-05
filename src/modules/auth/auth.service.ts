@@ -31,7 +31,7 @@ export class AuthService {
         
     }
     async login(user: User): Promise<LoginResponseDTO> {
-        const payload = { email: user.email, id: user.id, guid: user.guid };
+        const payload = { email: user.email, id: user.id, guid: user.guid, role: user.role };
         const accessToken = this.jwtService.sign(payload);
         const refreshToken = this.jwtService.sign(payload, { secret: process.env.JWT_REFRESH_SECRET, expiresIn: process.env.REFRESH_TOKEN_VALIDITY_DURATION_IN_SEC });
         const expiresIn = process.env.JWT_EXPIRES_IN;
