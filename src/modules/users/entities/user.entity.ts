@@ -20,7 +20,7 @@ export class User {
   @Column({ default: false })
   isVerified: boolean; // Flag to track if email is verified
 
-  @Column({ default: 'user' })
+  @Column({ default: 'USER' })
   role: string;
 
   @Column({ nullable: true })
