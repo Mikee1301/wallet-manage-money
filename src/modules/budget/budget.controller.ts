@@ -11,12 +11,12 @@ import { User } from '../../common/decorators/user.decorator';
 
 @Controller('budgets')
 @UseGuards(JwtGuard, RolesGuard)
+@UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
 export class BudgetController {
     constructor(private readonly budgetService: BudgetService){}
 
     @Post()
     @Roles(Role.ADMIN,Role.USER)
-    @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
     async createBudget(@Body() createBudgetDto: CreateBudgetDto,  @User('id') userId: string) {
         return this.budgetService.create(createBudgetDto,userId);
     }

@@ -42,7 +42,7 @@ export class BudgetService {
                 id:budgetId, 
                 userId },
           });
-        if (!budget) throw new BadRequestException(`Budget with ID ${budgetId} not found`);
+        if (!budget) throw new NotFoundException(`Budget with ID ${budgetId} not found`);
         return budget;
     }
     async update(budgetId: string, updateBudgetDto: UpdateBudgetDto, userId: string): Promise<Budget> {
