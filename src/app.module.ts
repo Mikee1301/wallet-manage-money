@@ -8,6 +8,8 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtGuard } from './common/guards/jwt.guard';
 import { JwtStrategy } from './modules/auth/jwt.strategy';      
 import { AuthModule } from './modules/auth/auth.module';
+import { BudgetModule } from './modules/budget/budget.module';
+
 
 
 @Module({
@@ -17,7 +19,8 @@ import { AuthModule } from './modules/auth/auth.module';
     }),
     AuthModule,
     UsersModule, 
-    DatabaseModule],
+    DatabaseModule,
+    BudgetModule],
   controllers: [AppController],
   providers: [
     AppService,
