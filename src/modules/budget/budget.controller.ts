@@ -1,59 +1,58 @@
-import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Put, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post, Put, Req, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { BudgetService } from './budget.service';
 import { CreateBudgetDto } from './dto/create-budget.dto';
 import { JwtGuard } from '../../common/guards/jwt.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
 import { Roles } from '../../common/decorators/role.decorator';
 import { Role } from '../../common/enums/role.enum';
-import { UsersService } from '../users/users.service';
 import { UpdateBudgetDto } from './dto/update-budget.dto';
+import { User } from '../../common/decorators/user.decorator';
 
 
-
-@Controller('budget')
+@Controller('budgets')
 @UseGuards(JwtGuard, RolesGuard)
 export class BudgetController {
-    constructor(private readonly budgetService: BudgetService,private readonly userService: UsersService){}
+    constructor(private readonly budgetService: BudgetService){}
 
     @Post()
     @Roles(Role.ADMIN,Role.USER)
     @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
-    async createBudget(@Body() createBudgetDto: CreateBudgetDto) {
-        const isBudgetExist = await this.budgetService.findByName(createBudgetDto.name);
-        if (isBudgetExist) throw new BadRequestException( "Budget name already exists!" );
-        return this.budgetService.create(createBudgetDto);
+    async createBudget(@Body() createBudgetDto: CreateBudgetDto,  @User('id') userId: string) {
+        return this.budgetService.create(createBudgetDto,userId);
     }
 
-    @Get(':userId/:budgetId')
+    @Get()
     @Roles(Role.ADMIN,Role.USER)
-    async getBudgets(@Param('userId') userId: number, @Param('budgetId') budgetId: string) {
-        if (!userId || !budgetId)  throw new BadRequestException('userId and budgetId are required.');
-
-        const user = await this.userService.findOne(userId);
-        if (!user) throw new BadRequestException('User not found');
-
-        const budget = await this.budgetService.findById(budgetId);
-        if (!budget) throw new BadRequestException('Budget not found');
-
-        return budget;
+    async getBudgets(@User('id') userId: string) {
+        return this.budgetService.findAll(userId);
     }
 
-    @Put(':userId/:budgetId')
+    @Get(':budgetId')
+    @Roles(Role.ADMIN, Role.USER)
+    async getBudget(
+        @Param('budgetId', ParseUUIDPipe) budgetId: string,
+        @User('id') userId: string
+    ) {
+        return this.budgetService.findById(budgetId, userId);
+    }
+
+    @Put(':budgetId')
     @Roles(Role.ADMIN,Role.USER)
-    async updateBudget(@Param('userId') userId: number, @Param('budgetId') budgetId: string, @Body() updateBudgetDto: UpdateBudgetDto) {
-        const user = await this.userService.findOne(userId);
-        if (!user) throw new BadRequestException('User not found');
-        if (!budgetId)  throw new BadRequestException('budgetId is required!');
-        return this.budgetService.update(budgetId, updateBudgetDto);
+    async updateBudget(
+        @Param('budgetId', ParseUUIDPipe) budgetId: string,
+        @Body() updateBudgetDto: UpdateBudgetDto, 
+        @User('id') userId: string
+    ) {
+        return this.budgetService.update(budgetId, updateBudgetDto, userId);
     }   
 
-    @Delete(':userId/:budgetId')
+    @Delete(':budgetId')
     @Roles(Role.ADMIN,Role.USER)
-    async deleteBudget(@Param('userId') userId: number, @Param('budgetId') budgetId: string) {
-        const user = await this.userService.findOne(userId);
-        if (!user) throw new BadRequestException('User not found');
-        if (!budgetId)  throw new BadRequestException('budgetId is required!');
-        return this.budgetService.remove(budgetId);
+    async deleteBudget(
+        @Param('budgetId', ParseUUIDPipe) budgetId: string,
+        @User('id') userId: string
+    ) {
+        return this.budgetService.remove(budgetId, userId);
     }
 
 }

@@ -11,7 +11,6 @@ import {
   import { Type } from 'class-transformer';
   
   export class CreateBudgetDto {
-    @IsNotEmpty()
     userId: string;
   
     @IsString()
