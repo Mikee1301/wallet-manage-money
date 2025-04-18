@@ -9,6 +9,7 @@ import { JwtGuard } from './common/guards/jwt.guard';
 import { JwtStrategy } from './modules/auth/jwt.strategy';      
 import { AuthModule } from './modules/auth/auth.module';
 import { BudgetModule } from './modules/budget/budget.module';
+import { AccountsModule } from './modules/accounts/accounts.module';
 
 
 
@@ -20,7 +21,8 @@ import { BudgetModule } from './modules/budget/budget.module';
     AuthModule,
     UsersModule, 
     DatabaseModule,
-    BudgetModule],
+    BudgetModule,
+    AccountsModule,],
   controllers: [AppController],
   providers: [
     AppService,
