@@ -1,4 +1,18 @@
-import { BadRequestException, Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post, Put, Req, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Post,
+  Put,
+  Req,
+  UseGuards,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { BudgetService } from './budget.service';
 import { CreateBudgetDto } from './dto/create-budget.dto';
 import { JwtGuard } from '../../common/guards/jwt.guard';
@@ -8,51 +22,52 @@ import { Role } from '../../common/enums/role.enum';
 import { UpdateBudgetDto } from './dto/update-budget.dto';
 import { User } from '../../common/decorators/user.decorator';
 
-
 @Controller('budgets')
 @UseGuards(JwtGuard, RolesGuard)
 @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
 export class BudgetController {
-    constructor(private readonly budgetService: BudgetService){}
+  constructor(private readonly budgetService: BudgetService) {}
 
-    @Post()
-    @Roles(Role.ADMIN,Role.USER)
-    async createBudget(@Body() createBudgetDto: CreateBudgetDto,  @User('id') userId: string) {
-        return this.budgetService.create(createBudgetDto,userId);
-    }
+  @Post()
+  @Roles(Role.ADMIN, Role.USER)
+  async createBudget(
+    @Body() createBudgetDto: CreateBudgetDto,
+    @User('id') userId: string,
+  ) {
+    return this.budgetService.create(createBudgetDto, userId);
+  }
 
-    @Get()
-    @Roles(Role.ADMIN,Role.USER)
-    async getBudgets(@User('id') userId: string) {
-        return this.budgetService.findAll(userId);
-    }
+  @Get()
+  @Roles(Role.ADMIN, Role.USER)
+  async getBudgets(@User('id') userId: string) {
+    return this.budgetService.findAll(userId);
+  }
 
-    @Get(':budgetId')
-    @Roles(Role.ADMIN, Role.USER)
-    async getBudget(
-        @Param('budgetId', ParseUUIDPipe) budgetId: string,
-        @User('id') userId: string
-    ) {
-        return this.budgetService.findById(budgetId, userId);
-    }
+  @Get(':budgetId')
+  @Roles(Role.ADMIN, Role.USER)
+  async getBudget(
+    @Param('budgetId', ParseUUIDPipe) budgetId: string,
+    @User('id') userId: string,
+  ) {
+    return this.budgetService.findById(budgetId, userId);
+  }
 
-    @Put(':budgetId')
-    @Roles(Role.ADMIN,Role.USER)
-    async updateBudget(
-        @Param('budgetId', ParseUUIDPipe) budgetId: string,
-        @Body() updateBudgetDto: UpdateBudgetDto, 
-        @User('id') userId: string
-    ) {
-        return this.budgetService.update(budgetId, updateBudgetDto, userId);
-    }   
+  @Put(':budgetId')
+  @Roles(Role.ADMIN, Role.USER)
+  async updateBudget(
+    @Param('budgetId', ParseUUIDPipe) budgetId: string,
+    @Body() updateBudgetDto: UpdateBudgetDto,
+    @User('id') userId: string,
+  ) {
+    return this.budgetService.update(budgetId, updateBudgetDto, userId);
+  }
 
-    @Delete(':budgetId')
-    @Roles(Role.ADMIN,Role.USER)
-    async deleteBudget(
-        @Param('budgetId', ParseUUIDPipe) budgetId: string,
-        @User('id') userId: string
-    ) {
-        return this.budgetService.remove(budgetId, userId);
-    }
-
+  @Delete(':budgetId')
+  @Roles(Role.ADMIN, Role.USER)
+  async deleteBudget(
+    @Param('budgetId', ParseUUIDPipe) budgetId: string,
+    @User('id') userId: string,
+  ) {
+    return this.budgetService.remove(budgetId, userId);
+  }
 }

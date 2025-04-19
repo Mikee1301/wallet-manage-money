@@ -31,9 +31,77 @@
 # -H "Content-Type: application/json" \
 # -d '{"name": "Mike Doe", "email": "mike.doe@gmail.com", "password": "P@ssword1"}'
 
-curl -X POST http://localhost:3000/auth/login \
--H "Content-Type: application/json" \
--d '{"email": "mike.doe@gmail.com", "password": "P@ssword1"}'
+# curl -X POST http://localhost:3000/auth/login \
+# -H "Content-Type: application/json" \
+# -d '{"email": "mike.doe@gmail.com", "password": "P@ssword1"}'
 
 
+# curl -X GET \
+#   http://localhost:3000/users \
+#   -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1pa2UuZG9lQGdtYWlsLmNvbSIsImlkIjo4LCJndWlkIjoiMjhmYTE3NTgtYjJlYi00ZWE3LWI1ZjctZGZjZDljMzliMDU5Iiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzQzODYwNTcxLCJleHAiOjE3NDM4NjQxNzF9.cW4cK5LcMhFBIULLC52tRYjLHU4_YRfmq9S3yGeNquY'
 
+# curl -X POST \
+#   http://localhost:3000/budgets \
+#   -H 'Content-Type: application/json' \
+#   -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1pa2UuZG9lQGdtYWlsLmNvbSIsImlkIjo4LCJndWlkIjoiMjhmYTE3NTgtYjJlYi00ZWE3LWI1ZjctZGZjZDljMzliMDU5Iiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzQ0NTQxMjMzLCJleHAiOjE3NDQ1NDQ4MzN9.tRhFKfluuio0jhmEBN7NXrx68WyPqiiyT52OQ8LTc8o' \
+#   -d '{
+#     "name": "Monthly Groceries Budget",
+#     "amount": 500,
+#     "startDate": "2024-07-01",
+#     "categoryId": "some-category-uuid",
+#     "isRecurring": true,
+#     "recurrenceType": "monthly",
+#     "resetDay": 1,
+#     "nextResetDate": "2024-08-01"
+#   }'
+
+# curl -X GET \
+#   http://localhost:3000/budgets \
+#   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1pa2UuZG9lQGdtYWlsLmNvbSIsImlkIjo4LCJndWlkIjoiMjhmYTE3NTgtYjJlYi00ZWE3LWI1ZjctZGZjZDljMzliMDU5Iiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzQ0NTMyMjkwLCJleHAiOjE3NDQ1MzU4OTB9.O6iEHT7I6Q7fDwl4LsZUdZXjy-4cU0tGE-cIHuYPfpM"
+
+# curl -X PUT \
+#   http://localhost:3000/budgets/11b035a2-9a2a-4119-ba7e-4c45c383b149 \
+#   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1pa2UuZG9lQGdtYWlsLmNvbSIsImlkIjo4LCJndWlkIjoiMjhmYTE3NTgtYjJlYi00ZWE3LWI1ZjctZGZjZDljMzliMDU5Iiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzQ0NTQxMjMzLCJleHAiOjE3NDQ1NDQ4MzN9.tRhFKfluuio0jhmEBN7NXrx68WyPqiiyT52OQ8LTc8o" \
+#   -H "Content-Type: application/json" \
+#   -d '{
+#     "name": "Updated Monthly Budget",
+#     "amount": 600,
+#     "startDate": "2024-07-01",
+#     "categoryId": "updated-category-id",
+#     "isRecurring": true,
+#     "recurrenceType": "monthly",
+#     "resetDay": 1,
+#     "nextResetDate": "2024-08-01"
+#   }'
+
+# curl -X DELETE \
+#   http://localhost:3000/budget/8/7f611dd7-7502-4362-a653-7ed816500915 \
+#   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1pa2UuZG9lQGdtYWlsLmNvbSIsImlkIjo4LCJndWlkIjoiMjhmYTE3NTgtYjJlYi00ZWE3LWI1ZjctZGZjZDljMzliMDU5Iiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzQ0NTE2NTQzLCJleHAiOjE3NDQ1MjAxNDN9.uubccyBIUpL6QxvSo1oLMUS2nXEQZAimIdsg9Yqe3No"
+
+
+# curl -X POST http://localhost:3000/accounts \
+#   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1pa2UuZG9lQGdtYWlsLmNvbSIsImlkIjo4LCJndWlkIjoiMjhmYTE3NTgtYjJlYi00ZWE3LWI1ZjctZGZjZDljMzliMDU5Iiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzQ0OTY1NDUwLCJleHAiOjE3NDQ5NjkwNTB9.-yaD8yMx3PhytBYDdm_lV5J1WvzTZ5xYj4JuqLFGYCs" \
+#   -H "Content-Type: application/json" \
+#   -d '{
+#     "name": "BDO",
+#     "type": "BANK",
+#     "description": "Personal checking account",
+#     "balance": 1000.00
+#   }'
+
+curl -X GET http://localhost:3000/accounts/ \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1pa2UuZG9lQGdtYWlsLmNvbSIsImlkIjo4LCJndWlkIjoiMjhmYTE3NTgtYjJlYi00ZWE3LWI1ZjctZGZjZDljMzliMDU5Iiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzQ0OTY1NDUwLCJleHAiOjE3NDQ5NjkwNTB9.-yaD8yMx3PhytBYDdm_lV5J1WvzTZ5xYj4JuqLFGYCs"
+
+
+# curl -X PUT http://localhost:3000/accounts/9cea4ef0-86e0-4182-a04b-912af10a3853 \
+#   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1pa2UuZG9lQGdtYWlsLmNvbSIsImlkIjo4LCJndWlkIjoiMjhmYTE3NTgtYjJlYi00ZWE3LWI1ZjctZGZjZDljMzliMDU5Iiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzQ0OTY1NDUwLCJleHAiOjE3NDQ5NjkwNTB9.-yaD8yMx3PhytBYDdm_lV5J1WvzTZ5xYj4JuqLFGYCs" \
+#   -H "Content-Type: application/json" \
+#   -d '{
+#     "name": "BPI",
+#     "type": "BANK",
+#     "description": "Updated account description",
+#     "balance": 2000.00
+#   }'
+
+# curl -X DELETE http://localhost:3000/accounts/9cea4ef0-86e0-4182-a04b-912af10a3853 \
+#   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1pa2UuZG9lQGdtYWlsLmNvbSIsImlkIjo4LCJndWlkIjoiMjhmYTE3NTgtYjJlYi00ZWE3LWI1ZjctZGZjZDljMzliMDU5Iiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzQ0OTY1NDUwLCJleHAiOjE3NDQ5NjkwNTB9.-yaD8yMx3PhytBYDdm_lV5J1WvzTZ5xYj4JuqLFGYCs"

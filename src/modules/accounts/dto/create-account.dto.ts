@@ -1,4 +1,11 @@
-import { IsEnum, IsNotEmpty, IsOptional, IsString, IsNumber, Min } from 'class-validator';
+import {
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsNumber,
+  Min,
+} from 'class-validator';
 import { AccountType } from '../../../common/enums/account.type.enums';
 
 export class CreateAccountDto {
@@ -7,7 +14,9 @@ export class CreateAccountDto {
   name: string;
 
   @IsOptional()
-  @IsEnum(AccountType, { message: 'type must be one of: CASH, BANK, CREDIT, DEBIT,WALLET,OTHER' })
+  @IsEnum(AccountType, {
+    message: 'type must be one of: CASH, BANK, CREDIT, DEBIT,WALLET,OTHER',
+  })
   type?: AccountType;
 
   @IsOptional()
@@ -16,5 +25,5 @@ export class CreateAccountDto {
 
   @IsNumber()
   @Min(0, { message: 'Initial amount must be a positive number' })
-  balance: number; 
+  balance: number;
 }

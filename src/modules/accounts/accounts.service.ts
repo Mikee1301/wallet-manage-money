@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException, ConflictException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Account } from './entities/account.entity';
@@ -13,18 +18,29 @@ export class AccountService {
   ) {}
 
   // Helper function to check if account name exists for the user
-  private async accountExistsForUser(accountName: string, userId: string): Promise<Account> {
+  private async accountExistsForUser(
+    accountName: string,
+    userId: string,
+  ): Promise<Account> {
     const query = this.accountRepository.createQueryBuilder('account');
     return query
-        .where('LOWER(account.name) = :name', { name: accountName.toLowerCase() })
-        .andWhere('account.userId = :userId', { userId })
-        .getOne();
+      .where('LOWER(account.name) = :name', { name: accountName.toLowerCase() })
+      .andWhere('account.userId = :userId', { userId })
+      .getOne();
   }
 
-  async create(createAccountDto: CreateAccountDto, userId: string): Promise<Account> {
-
-    const isAccountExist = await this.accountExistsForUser(createAccountDto.name, userId);
-    if (isAccountExist) throw new ConflictException(`Account with name "${createAccountDto.name}" already exists for this user.`);
+  async create(
+    createAccountDto: CreateAccountDto,
+    userId: string,
+  ): Promise<Account> {
+    const isAccountExist = await this.accountExistsForUser(
+      createAccountDto.name,
+      userId,
+    );
+    if (isAccountExist)
+      throw new ConflictException(
+        `Account with name "${createAccountDto.name}" already exists for this user.`,
+      );
 
     const account = this.accountRepository.create({
       ...createAccountDto,
@@ -48,14 +64,22 @@ export class AccountService {
     return account;
   }
 
-  async update(id: string, updateDto: UpdateAccountDto, userId: string): Promise<Account> {
+  async update(
+    id: string,
+    updateDto: UpdateAccountDto,
+    userId: string,
+  ): Promise<Account> {
     const account = await this.findOne(id, userId);
 
-
     if (updateDto.name && updateDto.name !== account.name) {
-      const isAccountExist = await this.accountExistsForUser(updateDto.name, userId);
+      const isAccountExist = await this.accountExistsForUser(
+        updateDto.name,
+        userId,
+      );
       if (isAccountExist) {
-        throw new ConflictException(`Account with name "${updateDto.name}" already exists for this user.`);
+        throw new ConflictException(
+          `Account with name "${updateDto.name}" already exists for this user.`,
+        );
       }
     }
 

@@ -13,7 +13,12 @@ const mockUsersService = {
   findOne: jest.fn().mockResolvedValue({ id: 1, name: 'Test User' }),
   update: jest.fn().mockResolvedValue({ id: 1, name: 'Updated User' }),
   remove: jest.fn().mockResolvedValue({ id: 1 }),
-  findUserByEmail: jest.fn().mockResolvedValue({ id: 1, email: 'test@example.com', otp: '123456', otpExpiresAt: new Date(Date.now() + 600000) }),
+  findUserByEmail: jest.fn().mockResolvedValue({
+    id: 1,
+    email: 'test@example.com',
+    otp: '123456',
+    otpExpiresAt: new Date(Date.now() + 600000),
+  }),
 };
 
 // Mock the JwtGuard
@@ -74,25 +79,50 @@ describe('UsersController', () => {
 
   describe('forgotPassword', () => {
     it('should send an OTP', async () => {
-      const result = { status: 'success', message: 'OTP sent successfully. Check your email' };
-      expect(await controller.forgetPassword({ email: 'test@example.com' })).toEqual(result);
-      expect(mockUsersService.findUserByEmail).toHaveBeenCalledWith('test@example.com');
+      const result = {
+        status: 'success',
+        message: 'OTP sent successfully. Check your email',
+      };
+      expect(
+        await controller.forgetPassword({ email: 'test@example.com' }),
+      ).toEqual(result);
+      expect(mockUsersService.findUserByEmail).toHaveBeenCalledWith(
+        'test@example.com',
+      );
     });
   });
 
   describe('verifyOtp', () => {
     it('should verify an OTP', async () => {
-      const result = { status: 'verified', message: 'OTP verified successfully' };
-      expect(await controller.verifyOtp({ email: 'test@example.com', otp: '123456' })).toEqual(result);
-      expect(mockUsersService.findUserByEmail).toHaveBeenCalledWith('test@example.com');
+      const result = {
+        status: 'verified',
+        message: 'OTP verified successfully',
+      };
+      expect(
+        await controller.verifyOtp({
+          email: 'test@example.com',
+          otp: '123456',
+        }),
+      ).toEqual(result);
+      expect(mockUsersService.findUserByEmail).toHaveBeenCalledWith(
+        'test@example.com',
+      );
     });
   });
 
   describe('resetPassword', () => {
     it('should reset the password', async () => {
       const result = { message: 'Password updated successfully' };
-      expect(await controller.resetPassword({ email: 'test@example.com', otp: '123456', newPassword: 'newPassword' })).toEqual(result);
-      expect(mockUsersService.findUserByEmail).toHaveBeenCalledWith('test@example.com');
+      expect(
+        await controller.resetPassword({
+          email: 'test@example.com',
+          otp: '123456',
+          newPassword: 'newPassword',
+        }),
+      ).toEqual(result);
+      expect(mockUsersService.findUserByEmail).toHaveBeenCalledWith(
+        'test@example.com',
+      );
     });
   });
 
